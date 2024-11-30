@@ -24,7 +24,7 @@ function getHumanChoice() {
     let humanChoice;
     let keepGoing = true;
     while(keepGoing) {
-        //humanChoice = prompt("Please type Rock, Paper or Scissors");
+        humanChoice = prompt("Please type Rock, Paper or Scissors");
         humanChoice = humanChoice.trim();
         humanChoice = humanChoice.toLowerCase();
         if (humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors") {
@@ -101,24 +101,19 @@ function checkTie(humanChoice, computerChoice) {
     return itsTie;   
 }
 
-function calculateScore(isHumanWinner, itsTie, humanScore, computerScore) {
-    if(itsTie) {
-        console.log(`Human score: ${humanScore}\nComputer score: ${computerScore}`)
+function getWinnerOfTheGame(humanScore, computerScore) {
+    if(humanScore === computerScore) {
+        console.log(`NO WINNER, IT'S A TIE.`)
+    }
+
+    else if(humanScore >= computerScore) {
+        console.log(`HUMAN WINS THE GAME.`)
     }
 
     else {
-        if(isHumanWinner) {
-            humanScore++;
-            console.log(`Human score: ${humanScore}\nComputer score: ${computerScore}`)
-            return humanScore;
-        }
-    
-        else {
-            computerScore++;
-            console.log(`Human score: ${humanScore}\nComputer score: ${computerScore}`)
-            return computerScore;
-        } 
+        console.log(`COMPUTER WINS THE GAME`)
     }
+
 }
 
 function playGame() {
@@ -127,12 +122,29 @@ function playGame() {
     let isHumanWinner;
     let itsTie;
     alert(`You will play best of 5`)
+
     for(let round = 1; round <=5; round++) {
         console.log(`Round #${round}`)
-        const humanChoice = "rock";
-        const computerChoice = "scissors";
+        const humanChoice = getHumanChoice();
+        const computerChoice = getComputerChoice();
         isHumanWinner = playRound(humanChoice, computerChoice);
         itsTie = checkTie(humanChoice, computerChoice);
+
+        if(itsTie) {
+            /* Nothing to execute here */
+        }
+    
+        else {
+            if(isHumanWinner) {
+                humanScore++;
+            }
+        
+            else {
+                computerScore++;
+            } 
+        }
+        console.log(`Human score: ${humanScore}\nComputer score: ${computerScore}`)
     }
+    getWinnerOfTheGame(humanScore, computerScore);
 }
 
