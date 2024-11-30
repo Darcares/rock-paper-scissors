@@ -1,5 +1,7 @@
 "use strict";
 
+playGame();
+
 function getComputerChoice() {
     let randomNumber;
     let computerChoice;
@@ -37,33 +39,66 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    let comparison;
-    comparison = `${humanChoice}-${computerChoice}`;
-    switch(comparison) {
+    let choicesComparison;
+    let isHumanWinner;
+    let itsTie;
+    choicesComparison = `${humanChoice}-${computerChoice}`;
+    switch(choicesComparison) {
         case "paper-rock":
         case "rock-scissors":
         case "scissors-paper":
-            console.log(`Human: ${humanChoice}.\nComputer: ${computerChoice}.\nHuman wins.`);
+            console.log(`Human: ${humanChoice}.\nComputer: ${computerChoice}.\nHuman wins this round.`);
+            isHumanWinner = true;
+            itsTie = false;
             break;
 
         case "rock-paper":
         case "paper-scissors":
         case "scissors-rock":
-            console.log(`Human: ${humanChoice}.\nComputer: ${computerChoice}.\nComputer wins.`);
+            console.log(`Human: ${humanChoice}.\nComputer: ${computerChoice}.\nComputer wins this round.`);
+            isHumanWinner = false;
+            itsTie = false;
             break;
 
         case "rock-rock":
         case "paper-paper":
         case "scissors-scissors":
-            console.log(`Human: ${humanChoice}.\nComputer: ${computerChoice}.\nIt's a tie.`);
+            console.log(`Human: ${humanChoice}.\nComputer: ${computerChoice}.\nIt's a tie this round.`);
+            isHumanWinner = false;
+            itsTie = true;
             break;
 
         default:
             console.log("Investigate error");
             break;
     }
+    return isHumanWinner, itsTie;
 }
 
-const humanChoice = getHumanChoice();
-const computerChoice = getComputerChoice();
-playRound(humanChoice, computerChoice);
+function calculateScore(isHumanWinner, itsTie, humanScore, computerScore) {
+    if(itsTie) {
+ 
+    }
+    else {
+        if(isHumanWinner){
+            humanScore++;
+        }
+    
+        else {
+            computerScore++;
+        } 
+    }
+    console.log(`Human score: ${humanScore}\nComputer score: ${computerScore}`)
+}
+
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+    let isHumanWinner = null;
+    let itsTie = null;
+    const humanChoice = getHumanChoice();
+    const computerChoice = getComputerChoice();
+    isHumanWinner, itsTie = playRound(humanChoice, computerChoice);
+    calculateScore(isHumanWinner, itsTie, humanScore, computerScore);
+}
+
