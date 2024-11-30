@@ -1,21 +1,21 @@
 "use strict";
 
 function getComputerChoice () {
-    let random;
-    let choice;
-    random = Math.round(Math.random() * (3 -1) + 1);
-    switch(random) {
+    let randomNumber;
+    let computerChoice;
+    randomNumber = Math.round(Math.random() * (3 - 1) + 1);
+    switch(randomNumber) {
         case 1:
-            choice = "Rock";
+            computerChoice = "Rock";
             break;
         case 2:
-            choice = "Paper";
+            computerChoice = "Paper";
             break;
         case 3:
-            choice = "Scissors"
+            computerChoice = "Scissors"
             break;
     }
-    return choice;
+    return computerChoice;
 }
 
 
