@@ -1,7 +1,5 @@
 "use strict";
 
-playGame();
-
 function getComputerChoice() {
     let randomNumber;
     let computerChoice;
