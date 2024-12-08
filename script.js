@@ -1,5 +1,7 @@
 "use strict";
 
+playGame();
+
 function getComputerChoice() {
     let randomNumber;
     let computerChoice;
@@ -18,22 +20,9 @@ function getComputerChoice() {
     return computerChoice;
 }
 
-function getHumanChoice() {
-    let humanChoice;
-    let keepGoing = true;
-    while(keepGoing) {
-        humanChoice = prompt("Please type Rock, Paper or Scissors");
-        humanChoice = humanChoice.trim();
-        humanChoice = humanChoice.toLowerCase();
-        if (humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors") {
-            keepGoing = false;
-            return humanChoice;
-        }
-        else {
-            keepGoing = true;
-            alert(`Invalid option.\nPlease choose again.`);
-        }
-    }
+function getHumanChoice(event) {
+    let humanChoice = event.currentTarget.id;
+    return humanChoice;
 }
 
 function playRound(humanChoice, computerChoice) {
@@ -59,7 +48,7 @@ function playRound(humanChoice, computerChoice) {
         case "paper-paper":
         case "scissors-scissors":
             console.log(`Human: ${humanChoice}.\nComputer: ${computerChoice}.\nIt's a tie this round.`);
-            isHumanWinner = false;
+            isHumanWinner = null;
             break;
 
         default:
@@ -67,36 +56,6 @@ function playRound(humanChoice, computerChoice) {
             break;
     }
     return isHumanWinner;   
-}
-
-function checkTie(humanChoice, computerChoice) {
-    let choicesComparison;
-    let itsTie;
-    choicesComparison = `${humanChoice}-${computerChoice}`;
-    switch(choicesComparison) {
-        case "paper-rock":
-        case "rock-scissors":
-        case "scissors-paper":
-            itsTie = false;
-            break;
-
-        case "rock-paper":
-        case "paper-scissors":
-        case "scissors-rock":
-            itsTie = false;
-            break;
-
-        case "rock-rock":
-        case "paper-paper":
-        case "scissors-scissors":
-            itsTie = true;
-            break;
-
-        default:
-            console.log("Investigate error");
-            break;
-    }
-    return itsTie;   
 }
 
 function getWinnerOfTheGame(humanScore, computerScore) {
@@ -117,32 +76,25 @@ function getWinnerOfTheGame(humanScore, computerScore) {
 function playGame() {
     let humanScore = 0;
     let computerScore = 0;
-    let isHumanWinner;
-    let itsTie;
-    alert(`You will play best of 5`)
+    let round = 1;
+    // alert(`You will play best of 5`)
+    let choices = document.querySelectorAll(`.choice`);
 
-    for(let round = 1; round <=5; round++) {
-        console.log(`Round #${round}`)
-        const humanChoice = getHumanChoice();
-        const computerChoice = getComputerChoice();
-        isHumanWinner = playRound(humanChoice, computerChoice);
-        itsTie = checkTie(humanChoice, computerChoice);
-
-        if(itsTie) {
-            /* Nothing to execute here */
-        }
-    
-        else {
-            if(isHumanWinner) {
-                humanScore++;
-            }
+    choices.forEach((choice) => {
+        choice.addEventListener(`click`, (event) => {
+            const humanChoice = getHumanChoice(event);
+            const computerChoice = getComputerChoice();
         
-            else {
-                computerScore++;
-            } 
-        }
-        console.log(`Human score: ${humanScore}\nComputer score: ${computerScore}`)
-    }
-    getWinnerOfTheGame(humanScore, computerScore);
+            const isHumanWinner = playRound(humanChoice, computerChoice);
+            if(isHumanWinner === true) humanScore++;
+            if(isHumanWinner === false) computerScore++;
+
+            console.log(`Human score: ${humanScore}\nComputer score: ${computerScore}`)
+            round++;
+            // if (round === 5) getWinnerOfTheGame(humanScore, computerScore);
+        });
+    });
+
+ 
 }
 
