@@ -73,6 +73,25 @@ function getWinnerOfTheGame(humanScore, computerScore) {
 
 }
 
+function calculateScore (isHumanWinner, humanScore, computerScore) {
+    if(isHumanWinner === true) humanScore++;
+    if(isHumanWinner === false) computerScore++;
+    console.log([humanScore, computerScore]);
+    return [humanScore, computerScore];
+}
+
+function printScore(humanScore, computerScore) {
+    let scores = document.querySelector(`.scores`);
+    scores.textContent = `Human: ${humanScore}  Computer: ${computerScore}`
+}
+
+function printRoundChoices(round, humanChoice, computerChoice) {
+    let choices = document.querySelector(`.rounds`);
+    let choice = document.createElement(`li`);
+    choice.textContent = `Round ${round}: Human: ${humanChoice}  |  Computer: ${computerChoice}`;
+    choices.appendChild(choice);
+}
+
 function playGame() {
     let humanScore = 0;
     let computerScore = 0;
@@ -84,12 +103,10 @@ function playGame() {
         choice.addEventListener(`click`, (event) => {
             const humanChoice = getHumanChoice(event);
             const computerChoice = getComputerChoice();
-        
             const isHumanWinner = playRound(humanChoice, computerChoice);
-            if(isHumanWinner === true) humanScore++;
-            if(isHumanWinner === false) computerScore++;
-
-            console.log(`Human score: ${humanScore}\nComputer score: ${computerScore}`)
+            [humanScore, computerScore] = calculateScore(isHumanWinner, humanScore, computerScore);
+            printScore(humanScore, computerScore);
+            printRoundChoices(round, humanChoice, computerChoice);
             round++;
             // if (round === 5) getWinnerOfTheGame(humanScore, computerScore);
         });
