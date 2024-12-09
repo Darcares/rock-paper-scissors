@@ -59,7 +59,7 @@ function getWinnerOfTheGame(humanScore, computerScore) {
     winMessage.classList.toggle(`message`);
     const restartMessage = document.createElement(`h3`);
     restartMessage.classList.toggle(`message`);
-    restartMessage.textContent = `Game will restart in 3 seconds...`;
+    restartMessage.textContent = `Game will restart in 5 seconds...`;
     
     if(humanScore === computerScore) {
         winMessage.textContent = `NO WINNER, IT'S A TIE.`;
@@ -123,8 +123,7 @@ function playGame() {
     let humanScore = 0;
     let computerScore = 0;
     let roundNo = 0;
-    const THREE_SECONDS = 3 * 1000;
-    // alert(`You will play best of 5`)
+    const FIVE_SECONDS = 5 * 1000;
     let choices = document.querySelectorAll(`.choice`);
 
     choices.forEach((choice) => {
@@ -141,7 +140,7 @@ function playGame() {
             getWinnerOfTheGame(humanScore, computerScore);
             setTimeout(() => {
                 [roundNo, humanScore, computerScore] = resetGame(roundNo, humanScore, computerScore)
-            }, THREE_SECONDS);
+            }, FIVE_SECONDS);
         }      
         });
     });
