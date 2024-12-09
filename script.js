@@ -129,7 +129,6 @@ function playGame() {
     choices.forEach((choice) => {
         choice.addEventListener(`click`, (event) => {
         roundNo++;
-        console.log(roundNo);
         const humanChoice = getHumanChoice(event);
         const computerChoice = getComputerChoice();
         const isHumanWinner = playRound(humanChoice, computerChoice);
